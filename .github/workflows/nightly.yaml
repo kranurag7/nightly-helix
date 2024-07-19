@@ -1,0 +1,22 @@
+name: Helix Nightly
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: cgr.dev/chainguard/wolfi-base:latest
+    steps:
+      - name: Install things
+        run: |
+          apk add build-base rust git
+          git clone https://github.com/helix-editor/helix.git
+          cd helix
+          cargo install --path helix-term --locked
+
+      - name: upload to nightly release
+        run: |
+          gh release upload nightly ~/.cargo/bin/hx --clobber # overwrites
