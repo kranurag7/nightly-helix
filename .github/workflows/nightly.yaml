@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Install things
         run: |
-          apk add build-base rust git
+          apk add build-base rust git gh
           git clone https://github.com/helix-editor/helix.git
           cd helix
           cargo install --path helix-term --locked
